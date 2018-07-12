@@ -53,14 +53,7 @@ class PostForm extends Component {
 
 PostForm.PropTypes = {
   newPost: PropTypes.func.isRequired,
-  posts: PropTypes.array.isRequired,
-  onePost: PropTypes.object
 }
-
-const mapStateToProps = state => ({
-  posts: state.posts.items, //taken from rootReducer -> combineReducers -> postReducer
-  onePost: state.posts.item
-})
 
 // connect maps state to properties
 export default connect(null, { newPost })(PostForm);
