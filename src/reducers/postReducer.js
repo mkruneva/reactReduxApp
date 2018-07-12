@@ -17,6 +17,7 @@ export default function(state = initialState, action) {
         items: action.payload
       };
     case NEW_POST:
+      console.log('2 new post reducer');
       return {
         ...state,
         item: action.payload

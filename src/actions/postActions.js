@@ -13,14 +13,9 @@ export const getPosts = () => dispatch => {   // dispatch - promise resolver
     })); // dispatch dat to reducer instead of setting state
 }
 
-export const postPost = () => dispatch => {
-  const post = {
-    title: this.state.title,
-    body: this.state.body
-  }
-
-  axios.post(`https://jsonplaceholder.typicode.com/posts`, post)
-    // .then(res => console.log(res.data))
+export const newPost = (postData) => dispatch => {
+  console.log('1 new post action');
+  axios.post(`https://jsonplaceholder.typicode.com/posts`, postData)
     .then(res => dispatch({
       type: NEW_POST,
       payload: res.data

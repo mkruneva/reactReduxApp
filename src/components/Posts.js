@@ -8,6 +8,12 @@ class Posts extends Component {
     this.props.getPosts();
   }
 
+  componentWillReceiveProps(nextProp) {
+    if (nextProp.onePost) {
+      this.props.posts.unshift(nextProp.onePost)
+    }
+  }
+
   render() {
     const postItems = this.props.posts.map(post => (
       <div key={post.id}>
@@ -27,11 +33,13 @@ class Posts extends Component {
 
 Posts.propTypes = {
   getPosts: PropTypes.func.isRequired,
-  posts: PropTypes.array.isRequired
+  posts: PropTypes.array.isRequired,
+  onePost: PropTypes.object
 }
 
 const mapStateToProps = state => ({
-  posts: state.posts.items //taken from rootReducer -> combineReducers -> postReducer
+  posts: state.posts.items, //taken from rootReducer -> combineReducers -> postReducer
+  onePost: state.posts.item
 })
 
 // connect maps state to properties

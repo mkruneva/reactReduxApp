@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { newPost } from '../actions/postActions';
 
 class PostForm extends Component {
   constructor(props) {
@@ -23,9 +25,8 @@ class PostForm extends Component {
       title: this.state.title,
       body: this.state.body 
     }
-    
-    axios.post(`https://jsonplaceholder.typicode.com/posts`, post)
-      .then(res => console.log(res.data))
+
+    this.props.newPost(post);
   }
 
   render() {
@@ -50,4 +51,16 @@ class PostForm extends Component {
   }
 }
 
-export default PostForm;
+PostForm.PropTypes = {
+  newPost: PropTypes.func.isRequired,
+  posts: PropTypes.array.isRequired,
+  onePost: PropTypes.object
+}
+
+const mapStateToProps = state => ({
+  posts: state.posts.items, //taken from rootReducer -> combineReducers -> postReducer
+  onePost: state.posts.item
+})
+
+// connect maps state to properties
+export default connect(null, { newPost })(PostForm);
