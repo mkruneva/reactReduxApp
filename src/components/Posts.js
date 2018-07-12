@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getPosts } from '../actions/postActions';
 
 class Posts extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     posts: []
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   axios.get(`https://jsonplaceholder.typicode.com/posts`)
-  //     .then(res => this.setState({ posts: res.data}));
-  // }
+  componentDidMount() {
+    this.props.getPosts();
+  }
 
   render() {
-    const postItems = this.state.posts.map(post => (
+    const postItems = this.props.posts.map(post => (
       <div key={post.id}>
         <h3>{post.title}</h3>
         <p>{post.body}</p>
@@ -31,4 +25,14 @@ class Posts extends Component {
   }
 }
 
-export default Posts;
+Posts.propTypes = {
+  getPosts: PropTypes.func.isRequired,
+  posts: PropTypes.array.isRequired
+}
+
+const mapStateToProps = state => ({
+  posts: state.posts.items //taken from rootReducer -> combineReducers -> postReducer
+})
+
+// connect maps state to properties
+export default connect(mapStateToProps, { getPosts })(Posts);
